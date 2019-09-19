@@ -7,7 +7,8 @@ class Gameboard extends Component {
     squareCount: 16
   }
   state = {
-    gameboard: ['l', 'ml', 'mr','r', 'l', 'ml', 'mr','r', 'l', 'ml', 'mr','r', 'l', 'ml', 'mr','r']
+    gameboard: ['l', 'ml', 'mr','r', 'l', 'ml', 'mr','r', 'l', 'ml', 'mr','r', 'l', 'ml', 'mr','r'],
+    moves: 0
   }
 
   constructor(props){
@@ -17,6 +18,9 @@ class Gameboard extends Component {
 
   toggleLight(sq){
     let curSquare = document.getElementById(sq);
+    this.setState({
+      moves: this.state.moves + 1
+    })
     let numT = (Number(curSquare.getAttribute('number')) - 4)
     let numR = (Number(curSquare.getAttribute('number')) + 1)
     let numB = (Number(curSquare.getAttribute('number')) + 4)
@@ -57,6 +61,7 @@ class Gameboard extends Component {
     return (
       <div className="Gameboard">
         <h1 className="Gameboard--heading">Lights Out</h1>
+        <p className="Gameboard--text">Moves: {this.state.moves}</p>
         <div className="Gameboard--square-container">
         {this.state.gameboard.map((stat, i) => {
           return <Square
