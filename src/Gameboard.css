@@ -5,7 +5,7 @@
 }
 
 .Gameboard--heading {
-  font-family: 'Megrim', cursive;
+  font-family: 'Megrim', sans-serif;
   font-size: 50px;
   text-transform: uppercase;
   color: rgba(68,174,250,1);
