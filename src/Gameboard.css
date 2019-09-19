@@ -4,6 +4,14 @@
   align-items: center;
 }
 
+.Gameboard--heading {
+  font-family: 'Megrim', cursive;
+  font-size: 50px;
+  text-transform: uppercase;
+  color: rgba(68,174,250,1);
+  text-shadow: 0 0 6px rgba(68,174,250,1);
+}
+
 .Gameboard--square-container {
   display: flex;
   width: 430px;

@@ -11,7 +11,7 @@ class Square extends Component {
   }
   render(){
     return(
-      <div className="Square" id={this.props.id} onClick={this.handleClick} position={this.props.pos} number={this.props.num}>
+      <div className={this.props.onStat === true ? 'Square Square--lit-up' : 'Square'} id={this.props.id} onClick={this.handleClick} position={this.props.pos} number={this.props.num}>
       </div>
     )
   }
