@@ -4,76 +4,55 @@ import Square from './Square.js';
 
 class Gameboard extends Component {
   static defaultProps = {
-    squareCount: 16
-  }
-  state = {
-    gameboard: ['l', 'ml', 'mr','r', 'l', 'ml', 'mr','r', 'l', 'ml', 'mr','r', 'l', 'ml', 'mr','r'],
-    moves: 0
-  }
+    rows: 5,
+    cols: 5,
+    randLightsOn: 0.20
+  };
+
 
   constructor(props){
     super(props);
-    this.toggleLight = this.toggleLight.bind(this);
+    this.renderNewGame = this.renderNewGame.bind(this)
+    // this.toggleLight = this.toggleLight.bind(this);
+
+    this.state = {
+        gameboard: this.renderNewGame(),
+        moves: 0,
+        hasWon: false
+      }
   }
 
-  toggleLight(sq){
-    let curSquare = document.getElementById(sq);
-    this.setState({
-      moves: this.state.moves + 1
-    })
-    let numT = (Number(curSquare.getAttribute('number')) - 4)
-    let numR = (Number(curSquare.getAttribute('number')) + 1)
-    let numB = (Number(curSquare.getAttribute('number')) + 4)
-    let numL = (Number(curSquare.getAttribute('number')) - 1)
 
-    if(!curSquare.classList.contains('Square--lit-up')){
-      curSquare.classList.add('Square--lit-up');
-
-      let posL = (curSquare.getAttribute('position') !== 'l') ?
-      document.querySelectorAll(`[number="${numL}"]`)[0].classList.toggle('Square--lit-up') : null;
-
-      let posR = (curSquare.getAttribute('position') !== 'r') ?
-      document.querySelectorAll(`[number="${numR}"]`)[0].classList.toggle('Square--lit-up') : null;
-
-      let posT = (Number(curSquare.getAttribute('number')) > (this.props.squareCount / 4) - 1) ?
-      document.querySelectorAll(`[number="${numT}"]`)[0].classList.toggle('Square--lit-up') : null;
-
-      let posB = (Number(curSquare.getAttribute('number')) < this.props.squareCount - 4) ?
-      document.querySelectorAll(`[number="${numB}"]`)[0].classList.toggle('Square--lit-up') : null;
-
-    } else {
-      curSquare.classList.remove('Square--lit-up')
-      let posL = (curSquare.getAttribute('position') !== 'l') ?
-      document.querySelectorAll(`[number="${numL}"]`)[0].classList.toggle('Square--lit-up') : null;
-
-      let posR = (curSquare.getAttribute('position') !== 'r') ?
-      document.querySelectorAll(`[number="${numR}"]`)[0].classList.toggle('Square--lit-up') : null;
-
-      let posT = (Number(curSquare.getAttribute('number')) > (this.props.squareCount / 4) - 1) ?
-      document.querySelectorAll(`[number="${numT}"]`)[0].classList.toggle('Square--lit-up') : null;
-
-      let posB = (Number(curSquare.getAttribute('number')) < this.props.squareCount - 4) ?
-      document.querySelectorAll(`[number="${numB}"]`)[0].classList.toggle('Square--lit-up') : null;
+  renderNewGame() {
+    let game = [];
+    for(let i = 0; i < this.props.rows; i++){
+      let row = [];
+      for(let j = 0; j < this.props.cols; j++){
+        row.push(Math.random() < this.props.randLightsOn)
+      }
+      game.push(row)
     }
+    return game;
   }
+
+  // toggleLight(sq){
+  // }
 
   render(){
+    let gameboard = [];
+    for(let i = 0; i < this.props.rows; i++){
+      let row = [];
+      for(let j = 0; j < this.props.cols; j++){
+        row.push(<Square isOn={this.state.gameboard[i][j]} />)
+      }
+      gameboard.push(<div className="Gameboard--row">{row}</div>)
+    }
     return (
       <div className="Gameboard">
         <h1 className="Gameboard--heading">Lights Out</h1>
         <p className="Gameboard--text">Moves: {this.state.moves}</p>
         <div className="Gameboard--square-container">
-        {this.state.gameboard.map((stat, i) => {
-          return <Square
-            toggleLight={this.toggleLight}
-            id={i + '-square'}
-            num={i}
-            key={i + '-square'}
-            pos={stat}
-            onStat={Math.random() < 0.4 ? true : false}
-          />
-
-        })}
+          {gameboard}
         </div>
       </div>
     )
