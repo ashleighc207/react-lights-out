@@ -43,7 +43,8 @@ class Gameboard extends Component {
     for(let i = 0; i < this.props.rows; i++){
       let row = [];
       for(let j = 0; j < this.props.cols; j++){
-        row.push(<Square isOn={this.state.gameboard[i][j]} />)
+        let pos = `${i}-${j}`;
+        row.push(<Square key={pos} isOn={this.state.gameboard[i][j]} />)
       }
       gameboard.push(<div className="Gameboard--row">{row}</div>)
     }
