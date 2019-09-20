@@ -7,11 +7,11 @@ class Square extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(evt){
-    this.props.toggleLight(this.props.id);
+    this.props.toggleLight(this.props.coord);
   }
   render(){
     return(
-      <div className={this.props.isOn === true ? 'Square Square--lit-up' : 'Square'} id={this.props.id} onClick={this.handleClick}>
+      <div className={this.props.isOn === true ? 'Square Square--lit-up' : 'Square'} id={this.props.coord} onClick={this.handleClick}>
       </div>
     )
   }
